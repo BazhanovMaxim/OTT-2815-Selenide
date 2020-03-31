@@ -1,0 +1,8 @@
+{
+  "fields": {
+    "project": { "key": "MAX" },
+    "summary": "TEST_ISSUE_API",
+    "description": "This is test issue was created with API",
+    "issuetype": { "name": "Story" }
+  }
+}

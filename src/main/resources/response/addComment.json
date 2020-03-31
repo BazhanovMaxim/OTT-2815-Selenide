@@ -1,0 +1,7 @@
+{
+  "body": "this comment was added by API",
+  "visibility": {
+    "type": "role",
+    "value": "Administrators"
+  }
+}
