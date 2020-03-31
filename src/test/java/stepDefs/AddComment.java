@@ -53,8 +53,8 @@ public class AddComment {
     @Тогда("пользователь печатает комментарий \"([^\"]*)\"$")
     public void пользовательПечатаетКомментарий(String comment) {
         reportedByMePage = new ReportedByMePage();
-        //reportedByMePage.setIssueCommentField(comment);
-        //this.comment = comment;
+        reportedByMePage.setIssueCommentField(comment);
+        this.comment = comment;
     }
 
     @И("пользовать нажимает на кнопку Add")
@@ -66,6 +66,6 @@ public class AddComment {
     @Тогда("проверяется добавленный комментарий")
     public void проверяетсяДобавленныйКомментарий() {
         reportedByMePage = new ReportedByMePage();
-        //reportedByMePage.checkAddedComment(comment);
+        reportedByMePage.checkAddedComment(comment);
     }
 }

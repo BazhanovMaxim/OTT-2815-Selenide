@@ -1,5 +1,6 @@
 package runner;
 
+import com.codeborne.selenide.Configuration;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.BeforeClass;
@@ -22,5 +23,7 @@ public class TestJiraRun {
     public static void beforeClass()
     {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\bazha\\Documents\\ChromeDriver\\chromedriver.exe");
+        Configuration.browser = "chrome";
+        Configuration.startMaximized = true;
     }
 }

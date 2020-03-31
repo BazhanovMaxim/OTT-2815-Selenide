@@ -34,6 +34,7 @@ public class ReportedByMePage{
     private SelenideElement issueWasCreated = $("#created-val > .livestamp");
     private SelenideElement issueWasUpdate = $("#updated-val > .livestamp");
     private SelenideElement issueCountComments = $(".show-more-comments");
+    private SelenideElement issueCommentChangeToText = $(".aui-navgroup-primary .aui-nav-selected > a");
 
     // Methods
     public void checkTitle(String title){
@@ -72,8 +73,9 @@ public class ReportedByMePage{
     }
 
     public void setIssueCommentField(String text){
-        issueCommentField.click();
-        issueCommentField.waitUntil(enabled, 10000).setValue(text);
+        // нажимаем на вкладку Text (в добавлении комментария)
+        issueCommentChangeToText.click();
+        issueCommentField.setValue(text);
     }
 
     public void addCommentButton(){
