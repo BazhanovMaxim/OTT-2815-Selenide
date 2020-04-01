@@ -41,19 +41,18 @@ public class AddCommentAPI {
             Response response = request.post("/rest/api/2/issue/{IssueKey}/comment", key_value);
             // ожидаем, что статус отправки запроса = 201 (Успешно)
             response.then().assertThat().statusCode(201);
-            // Получем тело ответа
-            ResponseBody responseBody = response.getBody();
             // Закрываем считываение файла
             bufferedReader.close();
-            setResponse(responseBody);
+            setResponse(response);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     // Создаём файл ответа
-    public void setResponse(ResponseBody responseBody){
+    public void setResponse(Response response){
         createFile = new CreateFile();
+        ResponseBody responseBody = response.getBody();
         createFile.writeToFileResponse(responseBody, "responseAddComment.json");
     }
 }
