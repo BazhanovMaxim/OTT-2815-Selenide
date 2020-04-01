@@ -32,7 +32,7 @@ public class ReadFile {
             Gson gson = new Gson();
             Map map_login = new HashMap<String, String>();
             // create a reader
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/response/data.json"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/response/userData.json"));
             // convert JSON file to map
             map_login = gson.fromJson(bufferedReader, Map.class);
             // close reader
