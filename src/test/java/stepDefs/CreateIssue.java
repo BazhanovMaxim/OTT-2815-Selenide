@@ -5,7 +5,7 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import filesUtils.CreateFile;
 import randonNameIssue.RandomName;
-import restAPI.request.CreateIssueAPI;
+import restAPI.request.PostRequest;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 import selenideElements.CreateIssuePage;
@@ -20,11 +20,11 @@ public class CreateIssue {
     private CreateIssuePage createIssuePage;
     private CreateFile createFile;
     private RandomName getRandomNameIssue;
-    private CreateIssueAPI createIssueAPI;
+    private PostRequest createIssueAPI;
 
     @Тогда("создаётся запись через API")
     public void создаётсяЗаписьЧерезAPI(){
-        createIssueAPI = new CreateIssueAPI();
+        createIssueAPI = new PostRequest();
         createIssueAPI.requestToCreateIssue();
     }
 

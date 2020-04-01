@@ -3,21 +3,21 @@ package stepDefs;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
-import restAPI.request.AddCommentAPI;
+import restAPI.request.PostRequest;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
 
 public class AddComment {
 
-    private AddCommentAPI addCommentAPI;
+    private PostRequest postRequest;
     private ReportedByMePage reportedByMePage;
     private NavigationPanel navigationPanel;
     private String comment;
 
     @Тогда("отправляется запрос на добавления комментария")
     public void отправляетсяЗапросНаДобавленияКомментария(){
-        addCommentAPI = new AddCommentAPI();
-        addCommentAPI.requestToAddComment();
+        postRequest = new PostRequest();
+        postRequest.requestToAddComment();
     }
 
     @Когда("пользователь нажимает на навигационную панель на Issue")

@@ -1,7 +1,7 @@
 package stepDefs;
 
 import io.cucumber.java.ru.Когда;
-import restAPI.request.DeleteIssueAPI;
+import restAPI.request.DeleteRequest;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import selenideElements.DeleteIssueTab;
@@ -11,11 +11,11 @@ public class DeleteIssue {
 
     private ReportedByMePage reportedByMePage;
     private DeleteIssueTab deleteIssueTab;
-    private DeleteIssueAPI deleteIssueAPI;
+    private DeleteRequest deleteIssueAPI;
 
     @Тогда("отправляется запрос на удаление записи")
     public void отправляетсяЗапросНаУдалениеЗаписи() {
-        deleteIssueAPI = new DeleteIssueAPI();
+        deleteIssueAPI = new DeleteRequest();
         deleteIssueAPI.setDeleteIssueAPI();
     }
 

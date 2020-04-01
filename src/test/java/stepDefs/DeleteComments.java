@@ -2,20 +2,20 @@ package stepDefs;
 
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
-import restAPI.request.DeleteIssueCommentsAPI;
+import restAPI.request.DeleteRequest;
 import selenideElements.DeleteCommentPanel;
 import selenideElements.ReportedByMePage;
 
 public class DeleteComments {
 
-    private DeleteIssueCommentsAPI deleteIssueCommentsAPI;
     private ReportedByMePage reportedByMePage;
     private DeleteCommentPanel deleteCommentPanel;
+    private DeleteRequest deleteRequest;
 
     @Тогда("Удаляется комментарий через API")
     public void удаляетсяКомментарийЧерезAPI() {
-        deleteIssueCommentsAPI = new DeleteIssueCommentsAPI();
-        deleteIssueCommentsAPI.setDeleteIssueAPI();
+        deleteRequest = new DeleteRequest();
+        deleteRequest.setDeleteCommentAPI();
     }
 
     @И("пользователь нажимает на кнопку Comments")

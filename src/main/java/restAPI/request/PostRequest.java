@@ -12,7 +12,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class CreateIssueAPI {
+public class PostRequest {
 
     private CreateFile createFile;
     private ReadFile readFile;
@@ -28,11 +28,22 @@ public class CreateIssueAPI {
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
         String pathToPostRequest = "/rest/api/2/issue/";
         int expectedStatusCode = 201;
-        createIssue(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
+        requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
     }
 
-    public void createIssue(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
-                            String pathToPostRequest, int expectedStatusCode){
+    public void requestToAddComment(){
+        readFile = new ReadFile();
+        String userLogin = readFile.returnLogin();
+        String userPassword = readFile.returnPass();
+        String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
+        String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
+        String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";
+        int expectedStatusCode = 201;
+        requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
+    }
+
+    public void requestToPost(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
+                              String pathToPostRequest, int expectedStatusCode){
         try{
             // Считываем файл и добавляем в JsonObject
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToJsonFileForCreateWithAPI));
@@ -60,7 +71,13 @@ public class CreateIssueAPI {
     public void setResponse(Response response){
         createFile = new CreateFile();
         ResponseBody responseBody = response.getBody();
-        createFile.checkFile((String)response.path("key"), "IssueKeyAPI.txt");
-        createFile.writeToFileResponse(responseBody, "responseCreateIssue.json");
+        if ((String)response.path("key") != null){
+            createFile.checkFile((String)response.path("key"), "IssueKeyAPI.txt");
+            createFile.writeToFileResponse(responseBody, "responseCreateIssue.json");
+        }
+        else{
+            createFile.writeToFileResponse(responseBody, "responseAddComment.json");
+        }
+
     }
 }

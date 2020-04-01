@@ -7,18 +7,18 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import selenideElements.EditIssuePage;
 import selenideElements.ReportedByMePage;
-import restAPI.request.UpdateInfoIssue;
+import restAPI.request.UpdateRequest;
 
 @RunWith(Cucumber.class)
 public class UpdateIssueInfo {
 
     private EditIssuePage editIssuePage;
     private ReportedByMePage reportedByMePage;
-    private UpdateInfoIssue updateIssueInfo;
+    private UpdateRequest updateIssueInfo;
 
     @Тогда("обновляется запись через API")
     public void обновляетсяЗаписьЧерезAPI(){
-        updateIssueInfo = new UpdateInfoIssue();
+        updateIssueInfo = new UpdateRequest();
         updateIssueInfo.updateInfo();
     }
 
