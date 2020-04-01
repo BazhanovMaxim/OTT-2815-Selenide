@@ -14,7 +14,18 @@ public class UpdateRequest {
 
     private ReadFile readFile;
 
-    private void requestToUpdate(String key_issue, String userLogin, String userPassword, String pathToDeleteRequest){
+    public void updateInfo(){
+        readFile = new ReadFile();
+        String userLogin = readFile.returnLogin();
+        String userPassword = readFile.returnPass();
+        String pathToPutRequest = "/rest/api/2/issue/{key_issue}";
+        String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
+        int expectedStatusCode = 204;
+        requestToUpdate(pathIssueKeyAPI, userLogin, userPassword, pathToPutRequest, expectedStatusCode);
+    }
+
+    private void requestToUpdate(String key_issue, String userLogin, String userPassword,
+                                 String pathToDeleteRequest, int expectedStatusCode){
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/response/editIssue.json"));
             JsonObject jb = new JsonParser().parse(bufferedReader).getAsJsonObject();
@@ -25,20 +36,10 @@ public class UpdateRequest {
             request.body(jb.toString());
             Response response = request.put(pathToDeleteRequest, key_issue);
             // ожидаем, что статус отправки запроса = 204 (Успешно)
-            response.then().assertThat().statusCode(204);
+            response.then().assertThat().statusCode(expectedStatusCode);
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void updateInfo(){
-        readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
-        String pathToPutRequest = "/rest/api/2/issue/{key_issue}";
-        String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
-        requestToUpdate(pathIssueKeyAPI, userLogin, userPassword, pathToPutRequest);
-    }
-
 }

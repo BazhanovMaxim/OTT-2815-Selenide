@@ -2,15 +2,15 @@ package stepDefs;
 
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
-import restAPI.response.GetCommentAPI;
+import restAPI.response.GetRequest;
 
 public class GetComment {
 
-    private GetCommentAPI getCommentAPI;
+    private GetRequest getCommentAPI;
 
     @Тогда("отправляется запрос на получение комментариев записи через API")
     public void отправляетсяЗапросНаПолучениеКомментариевЗаписиЧерезAPI(){
-        getCommentAPI = new GetCommentAPI();
+        getCommentAPI = new GetRequest();
         getCommentAPI.requestToGetComment();
     }
 
