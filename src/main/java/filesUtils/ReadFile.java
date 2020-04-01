@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ReadFile {
@@ -26,13 +25,13 @@ public class ReadFile {
         return issueName;
     }
 
-    public Map keyValue (){
+    private Map keyValue (String pathToReadFile){
         try {
             // create Gson instance
             Gson gson = new Gson();
-            Map map_login = new HashMap<String, String>();
+            Map map_login;
             // create a reader
-            BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/response/userData.json"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToReadFile));
             // convert JSON file to map
             map_login = gson.fromJson(bufferedReader, Map.class);
             // close reader
@@ -44,15 +43,28 @@ public class ReadFile {
         return null;
     }
 
-    public String returnLogin(){
-        Map map = keyValue();
-        String user_login = (String) map.get("login");
-        return new String(Base64.decodeBase64(user_login.getBytes()));
 
+
+    // Возвращаем id-комментария записи
+    public String returnIdComment(){
+        String pathToReadFile = "target/TestsFiles/responseAddComment.json";
+        Map map = keyValue(pathToReadFile);
+        String idComment = (String) map.get("id");
+        return idComment;
     }
 
+    // Возвращаем логин пользователья для входа
+    public String returnLogin(){
+        String pathToReadFile = "src/main/resources/response/userData.json";
+        Map map = keyValue(pathToReadFile);
+        String user_login = (String) map.get("login");
+        return new String(Base64.decodeBase64(user_login.getBytes()));
+    }
+
+    // Возвращаем пароль пользователья для входа
     public String returnPass(){
-        Map map = keyValue();
+        String pathToReadFile = "src/main/resources/response/userData.json";
+        Map map = keyValue(pathToReadFile);
         String user_password = (String) map.get("password");
         return new String(Base64.decodeBase64(user_password.getBytes()));
     }

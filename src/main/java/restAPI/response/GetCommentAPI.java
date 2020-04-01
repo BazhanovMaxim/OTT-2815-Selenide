@@ -19,7 +19,7 @@ public class GetCommentAPI {
     private void getCommentRequest(String key_value, String Login, String Password){
         readFile = new ReadFile();
 
-        //rest assured
+        // rest assured
         RestAssured.baseURI = "http://localhost:8080/";
         // авторизация = base64
         Response response = RestAssured.given().auth().preemptive().
