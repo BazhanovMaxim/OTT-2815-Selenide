@@ -14,6 +14,7 @@ public class UpdateRequest {
 
     private ReadFile readFile;
 
+    // Запрос на обновление записи
     public void updateInfo(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();

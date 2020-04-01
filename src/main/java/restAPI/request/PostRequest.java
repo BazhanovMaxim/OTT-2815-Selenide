@@ -17,10 +17,10 @@ public class PostRequest {
     private CreateFile createFile;
     private ReadFile readFile;
 
+
     /*
     * Создание записи через API
     */
-
     public void requestToCreateIssue(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
@@ -31,6 +31,9 @@ public class PostRequest {
         requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
     }
 
+    /*
+    * Запрос на добавления комментария через API
+     */
     public void requestToAddComment(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
@@ -42,6 +45,7 @@ public class PostRequest {
         requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
     }
 
+    // Запрос
     public void requestToPost(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
                               String pathToPostRequest, int expectedStatusCode){
         try{
@@ -67,7 +71,11 @@ public class PostRequest {
         }
     }
 
-    // Создаём файл с ответом и ключом записи
+    /*
+    * Создаём файл с ответом и ключом записи
+    * Если найден путь "key" - то это ответ с получением создание записи
+    * иначе - создание комментария
+     */
     public void setResponse(Response response){
         createFile = new CreateFile();
         ResponseBody responseBody = response.getBody();

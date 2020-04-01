@@ -11,6 +11,7 @@ public class GetRequest {
     private ReadFile readFile;
     private CreateFile createFile;
 
+    // Get-запрос на получение комментария
     public void requestToGetComment(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
@@ -21,6 +22,7 @@ public class GetRequest {
         getRequest(issueKey, userLogin, userPassword, pathToPostRequest, expectedStatusCode);
     }
 
+    // Get-запрос на получение информации о записи
     public void requestToGetIssueInfo(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
@@ -31,6 +33,7 @@ public class GetRequest {
         getRequest(issueKey, userLogin, userPassword, pathToPostRequest, expectedStatusCode);
     }
 
+    // Запрос
     private void getRequest(String key_value, String Login, String Password,
                             String pathToPostRequest, int expectedStatusCode){
         // rest assured
