@@ -25,7 +25,7 @@ public class CreateIssue {
     @Тогда("создаётся запись через API")
     public void создаётсяЗаписьЧерезAPI(){
         createIssueAPI = new CreateIssueAPI();
-        createIssueAPI.createIssue();
+        createIssueAPI.requestToCreateIssue();
     }
 
     @Когда("пользователь нажимает на кнопку Create")
