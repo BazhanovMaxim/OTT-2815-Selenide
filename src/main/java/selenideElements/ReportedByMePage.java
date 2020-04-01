@@ -33,7 +33,9 @@ public class ReportedByMePage{
     private SelenideElement issueResolution = $("#resolution-val");
     private SelenideElement issueWasCreated = $("#created-val > .livestamp");
     private SelenideElement issueWasUpdate = $("#updated-val > .livestamp");
-    private SelenideElement issueCountComments = $(".show-more-comments");
+    private SelenideElement issueAllCommentsButton = $("#comment-tabpanel > a");
+    private SelenideElement issueTrashButtonToDeleteComment = $(".aui-iconfont-delete");
+    private SelenideElement issueCheckDeletePanel = $(".aui-message");
     private SelenideElement issueCommentChangeToText = $(".aui-navgroup-primary .aui-nav-selected > a");
 
     // Methods
@@ -113,5 +115,20 @@ public class ReportedByMePage{
     private void setGetIssueUI(String issueInfo, String nameFile){
         createFile = new CreateFile();
         createFile.checkFile(issueInfo, nameFile);
+    }
+
+    public void clickIssueAllCommentButton(){
+        issueAllCommentsButton.click();
+    }
+
+    public void clickIssueTrashButtonToDeleteComment(){
+        // Сначала наводимся на элемент мышью для появления
+        issueTrashButtonToDeleteComment.hover();
+        // Кликаем на элемент
+        issueTrashButtonToDeleteComment.click();
+    }
+
+    public void checkIssueDeletePanel(){
+        issueCheckDeletePanel.shouldBe(visible);
     }
 }
