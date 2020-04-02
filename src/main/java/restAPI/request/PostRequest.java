@@ -17,37 +17,36 @@ public class PostRequest {
     private CreateFile createFile;
     private ReadFile readFile;
 
-
     /*
     * Создание записи через API
     */
-    public void requestToCreateIssue(){
+    public int requestToCreateIssue(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
         String userPassword = readFile.returnPass();
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
         String pathToPostRequest = "/rest/api/2/issue/";
-        int expectedStatusCode = 201;
-        requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
+        Response response = requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
+        return  response.statusCode();
     }
 
     /*
     * Запрос на добавления комментария через API
      */
-    public void requestToAddComment(){
+    public int requestToAddComment(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
         String userPassword = readFile.returnPass();
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
         String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";
-        int expectedStatusCode = 201;
-        requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest, expectedStatusCode);
+        Response response = requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
+        return response.statusCode();
     }
 
     // Запрос
-    public void requestToPost(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
-                              String pathToPostRequest, int expectedStatusCode){
+    public Response requestToPost(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
+                              String pathToPostRequest){
         try{
             // Считываем файл и добавляем в JsonObject
             BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToJsonFileForCreateWithAPI));
@@ -60,15 +59,15 @@ public class PostRequest {
             request.body(jb.toString());
             // запрос
             Response response = request.post(pathToPostRequest);
-            // ожидаем, что статус отправки запроса = 201 (Успешно)
-            response.then().assertThat().statusCode(expectedStatusCode);
             // создаём файл с ключом созданной записи
             bufferedReader.close();
             // Отправляем
             setResponse(response);
+            return response;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /*

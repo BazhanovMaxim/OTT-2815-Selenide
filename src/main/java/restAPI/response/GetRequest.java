@@ -12,30 +12,30 @@ public class GetRequest {
     private CreateFile createFile;
 
     // Get-запрос на получение комментария
-    public void requestToGetComment(){
+    public int requestToGetComment(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
         String userPassword = readFile.returnPass();
         String pathToPostRequest = "/rest/api/2/issue/{issueIdOrKey}/comment/";
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
-        int expectedStatusCode = 200;
-        getRequest(issueKey, userLogin, userPassword, pathToPostRequest, expectedStatusCode);
+        Response response = getRequest(issueKey, userLogin, userPassword, pathToPostRequest);
+        return response.statusCode();
     }
 
     // Get-запрос на получение информации о записи
-    public void requestToGetIssueInfo(){
+    public int requestToGetIssueInfo(){
         readFile = new ReadFile();
         String userLogin = readFile.returnLogin();
         String userPassword = readFile.returnPass();
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         String pathToPostRequest = "http://localhost:8080/rest/api/2/issue/{key_value_issue}";
-        int expectedStatusCode = 200;
-        getRequest(issueKey, userLogin, userPassword, pathToPostRequest, expectedStatusCode);
+        Response response  = getRequest(issueKey, userLogin, userPassword, pathToPostRequest);
+        return response.statusCode();
     }
 
     // Запрос
-    private void getRequest(String key_value, String Login, String Password,
-                            String pathToPostRequest, int expectedStatusCode){
+    private Response getRequest(String key_value, String Login, String Password,
+                            String pathToPostRequest){
         // rest assured
         RestAssured.baseURI = "http://localhost:8080/";
         // авторизация = base64
@@ -43,9 +43,8 @@ public class GetRequest {
                 basic(Login, Password).
                 when().
                 get(pathToPostRequest, key_value);
-        // ожидаем, что статус отправки запроса = 200 (Успешно)
-        response.then().assertThat().statusCode(expectedStatusCode);
         createFileKeyIssueAPI(response);
+        return response;
     }
 
     // Создаётся файл с ключём для созданной записи через API

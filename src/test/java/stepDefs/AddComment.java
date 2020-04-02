@@ -3,6 +3,7 @@ package stepDefs;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
+import org.junit.Assert;
 import restAPI.request.PostRequest;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
@@ -17,7 +18,7 @@ public class AddComment {
     @Тогда("отправляется запрос на добавления комментария")
     public void отправляетсяЗапросНаДобавленияКомментария(){
         postRequest = new PostRequest();
-        postRequest.requestToAddComment();
+        Assert.assertEquals(201,postRequest.requestToAddComment());
     }
 
     @Когда("пользователь нажимает на навигационную панель на Issue")

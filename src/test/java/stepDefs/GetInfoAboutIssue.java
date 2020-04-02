@@ -3,6 +3,7 @@ package stepDefs;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import cucumber.api.junit.Cucumber;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import restAPI.response.GetRequest;
 import selenideElements.ReportedByMePage;
@@ -16,7 +17,7 @@ public class GetInfoAboutIssue {
     @Тогда("отправляется запрос на получение информации о записи")
     public void ОтправляетсяЗапросНаПолучениеИнформацииОЗаписи(){
         getResponse = new GetRequest();
-        getResponse.requestToGetIssueInfo();
+        Assert.assertEquals(200, getResponse.requestToGetIssueInfo());
     }
 
     @И("пользователь записывает информацию о записи в \"([^\"]*)\"$")

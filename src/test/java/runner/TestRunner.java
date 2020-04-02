@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
                 "rerun:target/cucumber-reports/rerun.txt"}
 )
 
-public class TestJiraRun {
+public class TestRunner {
 
     @BeforeClass
     public static void beforeClass()

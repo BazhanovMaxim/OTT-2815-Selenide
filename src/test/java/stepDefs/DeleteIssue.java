@@ -1,6 +1,7 @@
 package stepDefs;
 
 import io.cucumber.java.ru.Когда;
+import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
@@ -16,7 +17,7 @@ public class DeleteIssue {
     @Тогда("отправляется запрос на удаление записи")
     public void отправляетсяЗапросНаУдалениеЗаписи() {
         deleteIssueAPI = new DeleteRequest();
-        deleteIssueAPI.setDeleteIssueAPI();
+        Assert.assertEquals(204, deleteIssueAPI.setDeleteIssueAPI());
     }
 
     @Когда("пользователь выбирает созданную ранее запись")

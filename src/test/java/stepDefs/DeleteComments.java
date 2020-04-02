@@ -2,6 +2,7 @@ package stepDefs;
 
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
+import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import selenideElements.DeleteCommentPanel;
 import selenideElements.ReportedByMePage;
@@ -15,7 +16,7 @@ public class DeleteComments {
     @Тогда("Удаляется комментарий через API")
     public void удаляетсяКомментарийЧерезAPI() {
         deleteRequest = new DeleteRequest();
-        deleteRequest.setDeleteCommentAPI();
+        Assert.assertEquals(204, deleteRequest.setDeleteCommentAPI());
     }
 
     @И("пользователь нажимает на кнопку Comments")

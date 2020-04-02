@@ -1,6 +1,7 @@
 package stepDefs;
 
 import cucumber.api.junit.Cucumber;
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
@@ -19,7 +20,7 @@ public class UpdateIssueInfo {
     @Тогда("обновляется запись через API")
     public void обновляетсяЗаписьЧерезAPI(){
         updateIssueInfo = new UpdateRequest();
-        updateIssueInfo.updateInfo();
+        Assert.assertEquals(204, updateIssueInfo.updateInfo());
     }
 
     @Когда("пользователь выбирает свою запись через ключ")

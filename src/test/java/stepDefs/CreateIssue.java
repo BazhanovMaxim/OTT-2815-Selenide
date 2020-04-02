@@ -4,6 +4,7 @@ import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import filesUtils.CreateFile;
+import org.junit.Assert;
 import randonNameIssue.RandomName;
 import restAPI.request.PostRequest;
 import cucumber.api.junit.Cucumber;
@@ -25,7 +26,7 @@ public class CreateIssue {
     @Тогда("создаётся запись через API")
     public void создаётсяЗаписьЧерезAPI(){
         createIssueAPI = new PostRequest();
-        createIssueAPI.requestToCreateIssue();
+        Assert.assertEquals(201, createIssueAPI.requestToCreateIssue());
     }
 
     @Когда("пользователь нажимает на кнопку Create")
