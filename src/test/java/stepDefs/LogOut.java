@@ -13,7 +13,7 @@ public class LogOut {
     private NavigationPanel navigationPanel;
 
     @И("пользователь выходит из системы")
-    public void пользователь_выходит_из_системы() {
+    public void userLogsOutOfTheSystem() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickProfileLink();
         navigationPanel.clickLogOutButton();

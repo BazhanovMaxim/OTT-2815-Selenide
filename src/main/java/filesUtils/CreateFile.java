@@ -9,9 +9,7 @@ public class CreateFile {
 
     private DeleteFile deleteFile;
 
-    /*
-    Проверка файла, если он создан, то удаляем и создаём новый
-     */
+    // Проверка файла, если он создан, то удаляем и создаём новый
     public void checkFile(String text, String nameFile){
         deleteFile = new DeleteFile();
         File file = new File("target\\TestsFiles\\" + nameFile);

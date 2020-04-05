@@ -17,8 +17,8 @@ public class UpdateRequest {
     // Запрос на обновление записи
     public int updateInfo(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String pathToPutRequest = "/rest/api/2/issue/{key_issue}";
         String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         Response response = requestToUpdate(pathIssueKeyAPI, userLogin, userPassword, pathToPutRequest);

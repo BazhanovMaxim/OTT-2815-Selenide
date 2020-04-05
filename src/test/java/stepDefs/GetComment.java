@@ -10,12 +10,12 @@ public class GetComment {
     private GetRequest getCommentAPI;
 
     @Тогда("отправляется запрос на получение комментариев записи через API")
-    public void отправляетсяЗапросНаПолучениеКомментариевЗаписиЧерезAPI(){
+    public void requestIsSentToGetCommentsOnTheEntryViaTheAPI(){
         getCommentAPI = new GetRequest();
         Assert.assertEquals(200, getCommentAPI.requestToGetComment());
     }
 
     @И("пользователь записывает информацию о комментариях в \"([^\"]*)\"$")
-    public void пользовательЗаписываетИнформациюОКомментарияхВ(String arg0) {
+    public void userWritesInformationAboutCommentsIn(String arg0) {
     }
 }

@@ -4,7 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import filesUtils.CreateFile;
@@ -16,7 +15,7 @@ public class ReportedByMePage{
     private CreateFile createFile;
 
     // Titles
-    private SelenideElement reportedByMe = $(".search-title");
+    private SelenideElement reportedByMeTitle = $(".search-title");
     private SelenideElement issueEditButton = $("#edit-issue > .trigger-label");
     private SelenideElement issueKey = $("#key-val");
     private SelenideElement issueSummary = $("#summary-val");
@@ -39,15 +38,14 @@ public class ReportedByMePage{
     private SelenideElement issueCommentChangeToText = $(".aui-navgroup-primary .aui-nav-selected > a");
 
     // Methods
-    public void checkTitle(String title){
-        reportedByMe.waitUntil(visible, 10000).shouldBe(exactText(title));
+    public String checkTitle(){
+        return reportedByMeTitle.getText();
+        //reportedByMe.waitUntil(visible, 10000).shouldBe(exactText(title));
     }
 
     public void clickEditButton(){
         issueEditButton.click();
     }
-
-    public String getIssueKey(){  return issueKey.getText();}
 
     public void clickToButtonMore(){
         issueMoreButton.click();

@@ -1,6 +1,5 @@
 package selenideElements;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -21,8 +20,9 @@ public class AuthPage {
         loginButton.click();
     }
 
-    public void checkTitleDashboard(String title){
-        titleDashboard.waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(title));
+    public String returnTitleDashboard(){
+        return titleDashboard.getText();
+        //titleDashboard.waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(title));
     }
 
 

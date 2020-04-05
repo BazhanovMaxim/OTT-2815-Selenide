@@ -16,56 +16,56 @@ public class AddComment {
     private String comment;
 
     @Тогда("отправляется запрос на добавления комментария")
-    public void отправляетсяЗапросНаДобавленияКомментария(){
+    public void requestIsSentToAddAComment(){
         postRequest = new PostRequest();
         Assert.assertEquals(201,postRequest.requestToAddComment());
     }
 
     @Когда("пользователь нажимает на навигационную панель на Issue")
-    public void пользовательНажимаетНаНавигационнуюПанельНаIssue() {
+    public void userClicksOnTheNavigationBarOnIssue() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickIssueNavigation();
     }
 
     @И("пользователь нажимает на Reported By Me")
-    public void пользовательНажимаетНаReportedByMe() {
+    public void userClicksOnTheReportedByMe() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickReporterLink();
     }
 
     @Тогда("пользователь на странице \"([^\"]*)\"$")
-    public void пользовательНаСтранице(String title) {
+    public void userOnThePage(String title) {
         reportedByMePage = new ReportedByMePage();
-        reportedByMePage.checkTitle(title);
+        Assert.assertEquals(title, reportedByMePage.checkTitle());
     }
 
     @Когда("пользовать выбирает запись по ключу")
-    public void пользоватьВыбираетЗаписьПоКлючу() {
+    public void userSelectsAnEntryByKey() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToIssueById();
     }
 
     @И("пользователь нажимает на кнопку Comment")
-    public void пользовательНажимаетНаКнопкуComment(){
+    public void userClicksTheCommentButton(){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickButtonComment();
     }
 
     @Тогда("пользователь печатает комментарий \"([^\"]*)\"$")
-    public void пользовательПечатаетКомментарий(String comment) {
+    public void userPrintsAComment(String comment) {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.setIssueCommentField(comment);
         this.comment = comment;
     }
 
     @И("пользовать нажимает на кнопку Add")
-    public void пользоватьНажимаетНаКнопкуAdd() {
+    public void userClicksTheAddButton() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.addCommentButton();
     }
 
     @Тогда("проверяется добавленный комментарий")
-    public void проверяетсяДобавленныйКомментарий() {
+    public void addedCommentIsChecked() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.checkAddedComment(comment);
     }

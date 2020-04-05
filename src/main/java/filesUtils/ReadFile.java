@@ -2,13 +2,14 @@ package filesUtils;
 
 import com.google.gson.Gson;
 import org.apache.commons.codec.binary.Base64;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.Map;
+import java.util.Properties;
 
 public class ReadFile {
+
+    public static final String PATH_TO_PROPERTIES = "src/main/resources/config.properties";
 
     // Чтение файла
     public String readFile(String pathFile){
@@ -43,30 +44,41 @@ public class ReadFile {
         return null;
     }
 
+    public String userParameters(String parameter){
 
+        FileInputStream fileInputStream;
+        //инициализируем специальный объект Properties
+        //типа Hashtable для удобной работы с данными
+        Properties prop = new Properties();
+
+        try {
+            //обращаемся к файлу и получаем данные
+            fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
+            prop.load(fileInputStream);
+            return prop.getProperty(parameter);
+        } catch (IOException e) {
+            System.out.println("Ошибка в программе: файл " + PATH_TO_PROPERTIES + " не обнаружено");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     // Возвращаем id-комментария записи
     public String returnIdComment(){
         String pathToReadFile = "target/TestsFiles/responseAddComment.json";
         Map map = keyValue(pathToReadFile);
-        String idComment = (String) map.get("id");
-        return idComment;
+        return (String) map.get("id");
     }
 
     // Возвращаем логин пользователья для входа
-    public String returnLogin(){
-        String pathToReadFile = "src/main/resources/response/userData.json";
-        Map map = keyValue(pathToReadFile);
-        String user_login = (String) map.get("login");
-        return new String(Base64.decodeBase64(user_login.getBytes()));
+    public String returnUserLogin(){
+        return userParameters("login");
     }
 
     // Возвращаем пароль пользователья для входа
-    public String returnPass(){
-        String pathToReadFile = "src/main/resources/response/userData.json";
-        Map map = keyValue(pathToReadFile);
-        String user_password = (String) map.get("password");
-        return new String(Base64.decodeBase64(user_password.getBytes()));
+    public String returnUserPassword(){
+        return userParameters("password");
     }
 
 }

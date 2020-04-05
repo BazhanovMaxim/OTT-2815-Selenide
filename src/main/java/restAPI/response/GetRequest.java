@@ -14,8 +14,8 @@ public class GetRequest {
     // Get-запрос на получение комментария
     public int requestToGetComment(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String pathToPostRequest = "/rest/api/2/issue/{issueIdOrKey}/comment/";
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         Response response = getRequest(issueKey, userLogin, userPassword, pathToPostRequest);
@@ -25,8 +25,8 @@ public class GetRequest {
     // Get-запрос на получение информации о записи
     public int requestToGetIssueInfo(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         String pathToPostRequest = "http://localhost:8080/rest/api/2/issue/{key_value_issue}";
         Response response  = getRequest(issueKey, userLogin, userPassword, pathToPostRequest);

@@ -10,8 +10,9 @@ public class DeleteCommentPanel {
 
     private SelenideElement issueTitleDeleteComment = $(".jira-dialog-heading > h2");
 
-    public void checkIssueTitleDeleteComment(String nameTab){
-        issueTitleDeleteComment.waitWhile(enabled, 10000).shouldHave(exactText(nameTab));
+    public String checkIssueTitleDeleteComment(){
+        return issueTitleDeleteComment.getText();
+        //issueTitleDeleteComment.waitWhile(enabled, 10000).shouldHave(exactText(nameTab));
     }
 
     public void clickIssueDeleteButton(String buttonToDelete){

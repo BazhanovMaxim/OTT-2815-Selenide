@@ -15,13 +15,13 @@ public class GetInfoAboutIssue {
     private ReportedByMePage reportedByMePage;
 
     @Тогда("отправляется запрос на получение информации о записи")
-    public void ОтправляетсяЗапросНаПолучениеИнформацииОЗаписи(){
+    public void requestIsSentToGetInformationAboutTheIssue(){
         getResponse = new GetRequest();
         Assert.assertEquals(200, getResponse.requestToGetIssueInfo());
     }
 
     @И("пользователь записывает информацию о записи в \"([^\"]*)\"$")
-    public void ПользовательЗаписываетсИнформациюОЗаписиВ(String nameFile){
+    public void userWritesWithInformationAboutTheEntryIn(String nameFile){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.getIssueUI(nameFile);
     }

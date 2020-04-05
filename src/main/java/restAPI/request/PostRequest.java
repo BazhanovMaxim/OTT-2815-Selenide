@@ -22,8 +22,8 @@ public class PostRequest {
     */
     public int requestToCreateIssue(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
         String pathToPostRequest = "/rest/api/2/issue/";
         Response response = requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
@@ -35,8 +35,8 @@ public class PostRequest {
      */
     public int requestToAddComment(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
         String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";

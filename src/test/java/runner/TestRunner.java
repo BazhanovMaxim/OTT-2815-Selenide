@@ -22,7 +22,7 @@ public class TestRunner {
     @BeforeClass
     public static void beforeClass()
     {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\bazha\\Documents\\ChromeDriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "lib/drivers/chromedriver.exe");
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
     }

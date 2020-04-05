@@ -1,8 +1,6 @@
 package selenideElements;
 
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class CreateIssuePage {
@@ -38,7 +36,8 @@ public class CreateIssuePage {
         createButton.click();
     }
 
-    public void checkTitleOfIssue(String nameTab) {
-        titleOfIssue.waitWhile(enabled, 10000).shouldHave(exactText(nameTab));
+    public String checkTitleOfIssue() {
+        return titleOfIssue.getText();
+        //titleOfIssue.waitWhile(enabled, 10000).shouldHave(exactText(nameTab));
     }
 }

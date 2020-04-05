@@ -15,43 +15,43 @@ public class DeleteIssue {
     private DeleteRequest deleteIssueAPI;
 
     @Тогда("отправляется запрос на удаление записи")
-    public void отправляетсяЗапросНаУдалениеЗаписи() {
+    public void requestToDeleteAnEntryIsSent() {
         deleteIssueAPI = new DeleteRequest();
         Assert.assertEquals(204, deleteIssueAPI.setDeleteIssueAPI());
     }
 
     @Когда("пользователь выбирает созданную ранее запись")
-    public void пользовательВыбираетСозданнуюРанееЗапись() {
+    public void userSelectsAPreviouslyCreatedIssue() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToCreatedIssueById();
     }
 
     @И("пользователь нажимает на кнопку More")
-    public void пользоватьНажимаетНаКнопку(){
+    public void userClicksTheButtonMore(){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToButtonMore();
     }
 
     @И("пользователь нажимает на кнопку Delete")
-    public void пользовательНажимаетНаКнопкуDelete() {
+    public void userClicksTheButtonDelete() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToDeleteButton();
     }
 
     @Тогда("появляется окно \"([^\"]*)\"$")
-    public void появляетсяОкно(String tabName){
+    public void windowsIsOpened(String deletePanelTitle){
         deleteIssueTab = new DeleteIssueTab();
-        deleteIssueTab.checkTitle(tabName);
+        Assert.assertEquals(deletePanelTitle, deleteIssueTab.checkTitle());
     }
 
     @И("пользователь удаляет запись")
-    public void пользовательУдаляетЗапись(){
+    public void userDeleteTheIssue(){
         deleteIssueTab = new DeleteIssueTab();
         deleteIssueTab.clickDeleteButton();
     }
 
     @Тогда("проверяется удаление записи")
-    public void проверяетсяУдалениеЗаписи() {
+    public void checkedToDeletedTheIssue() {
         deleteIssueTab = new DeleteIssueTab();
         deleteIssueTab.checkDeletedIssue();
     }

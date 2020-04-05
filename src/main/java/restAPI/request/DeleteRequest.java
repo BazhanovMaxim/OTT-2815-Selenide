@@ -14,8 +14,8 @@ public class DeleteRequest {
      */
     public int setDeleteIssueAPI(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String pathToDeleteRequest = "/rest/api/2/issue/{issueIdOrKey}";
         String pathIssueKeyAPI = readFile.readFile("target\\TestsFiles\\IssueKeyAPI.txt");
         Response response = deleteRequest(pathIssueKeyAPI, userLogin, userPassword, pathToDeleteRequest);
@@ -27,8 +27,8 @@ public class DeleteRequest {
      */
     public int setDeleteCommentAPI(){
         readFile = new ReadFile();
-        String userLogin = readFile.returnLogin();
-        String userPassword = readFile.returnPass();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
         String idComment = readFile.returnIdComment();
         String pathToDeleteRequest = "rest/api/2/issue/{IssueKey}/comment/" + idComment;
         String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
