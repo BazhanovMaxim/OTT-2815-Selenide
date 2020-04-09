@@ -3,6 +3,7 @@ package stepDefs;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.Когда;
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import io.cucumber.java.ru.И;
@@ -23,7 +24,13 @@ public class DeleteIssue {
     @Тогда("отправляется запрос на удаление записи")
     public void requestToDeleteAnEntryIsSent() {
         deleteIssueAPI = new DeleteRequest();
-        Assert.assertEquals(204, deleteIssueAPI.setDeleteIssueAPI());
+        readFile = new ReadFile();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
+        String pathToDeleteRequest = "/rest/api/2/issue/{issueIdOrKey}";
+        String pathIssueKeyAPI = readFile.readFile("target\\TestsFiles\\IssueKeyAPI.txt");
+        Response response = deleteIssueAPI.deleteRequest(pathIssueKeyAPI, userLogin, userPassword, pathToDeleteRequest);
+        Assert.assertEquals(204, response.getStatusCode());
     }
 
     @Step("Пользователь выбирает созданную ранее запись")

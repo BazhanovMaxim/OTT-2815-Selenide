@@ -1,9 +1,11 @@
 package stepDefs;
 
 import com.codeborne.selenide.Condition;
+import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import selenideElements.DeleteCommentPanel;
@@ -16,12 +18,20 @@ public class DeleteComment {
     private ReportedByMePage reportedByMePage;
     private DeleteCommentPanel deleteCommentPanel;
     private DeleteRequest deleteRequest;
+    private ReadFile readFile;
 
     @Step("Отправляется запрос на удаление записи через API")
     @Тогда("Удаляется комментарий через API")
     public void commentsAreDeletedViaTheAPI() {
         deleteRequest = new DeleteRequest();
-        Assert.assertEquals(204, deleteRequest.setDeleteCommentAPI());
+        readFile = new ReadFile();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
+        String idComment = readFile.returnIdComment();
+        String pathToDeleteRequest = "rest/api/2/issue/{IssueKey}/comment/" + idComment;
+        String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
+        Response response = deleteRequest.deleteRequest(pathIssueKeyAPI, userLogin, userPassword, pathToDeleteRequest);
+        Assert.assertEquals(204, response.getStatusCode());
     }
 
     @Step("Пользователь нажимает на кнопку Comments")

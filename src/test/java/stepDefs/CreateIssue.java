@@ -1,11 +1,13 @@
 package stepDefs;
 
 import com.codeborne.selenide.Condition;
+import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import filesUtils.CreateFile;
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import randonNameIssue.RandomName;
 import restAPI.request.PostRequest;
@@ -24,6 +26,8 @@ public class CreateIssue {
     private ReportedByMePage reportedByMePage;
     private CreateIssuePage createIssuePage;
     private CreateFile createFile;
+    private ReadFile readFile;
+    private PostRequest postRequest;
     private RandomName getRandomNameIssue;
     private PostRequest createIssueAPI;
 
@@ -31,7 +35,14 @@ public class CreateIssue {
     @Тогда("создаётся запись через API")
     public void issueIsCreatedViaTheAPI(){
         createIssueAPI = new PostRequest();
-        Assert.assertEquals(201, createIssueAPI.requestToCreateIssue());
+        readFile = new ReadFile();
+        postRequest = new PostRequest();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
+        String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
+        String pathToPostRequest = "/rest/api/2/issue/";
+        Response response = postRequest.requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
+        Assert.assertEquals(201, response.getStatusCode());
     }
 
     @Step("Пользователь нажимает на кнопку Create")

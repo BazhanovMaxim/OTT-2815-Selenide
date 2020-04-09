@@ -2,7 +2,9 @@ package stepDefs;
 
 import com.codeborne.selenide.Condition;
 import cucumber.api.junit.Cucumber;
+import filesUtils.ReadFile;
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import io.cucumber.java.ru.И;
@@ -20,12 +22,19 @@ public class UpdateIssueInfo {
     private EditIssuePage editIssuePage;
     private ReportedByMePage reportedByMePage;
     private UpdateRequest updateIssueInfo;
+    private ReadFile readFile;
 
     @Step("Отправляется запрос на обновление записи через API")
     @Тогда("обновляется запись через API")
     public void IssueIsUpdatedViaTheAPI(){
         updateIssueInfo = new UpdateRequest();
-        Assert.assertEquals(204, updateIssueInfo.updateInfo());
+        readFile = new ReadFile();
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
+        String pathToPutRequest = "/rest/api/2/issue/{key_issue}";
+        String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
+        Response response = updateIssueInfo.requestToUpdate(pathIssueKeyAPI, userLogin, userPassword, pathToPutRequest);
+        Assert.assertEquals(204, response.getStatusCode());
     }
 
     @Step("Пользователь выбирает свою запись через ключ")

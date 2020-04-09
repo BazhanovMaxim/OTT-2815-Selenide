@@ -3,7 +3,6 @@ package restAPI.request;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import filesUtils.CreateFile;
-import filesUtils.ReadFile;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -16,34 +15,6 @@ import java.io.IOException;
 public class PostRequest {
 
     private CreateFile createFile;
-    private ReadFile readFile;
-
-    /*
-    * Создание записи через API
-    */
-    public int requestToCreateIssue(){
-        readFile = new ReadFile();
-        String userLogin = readFile.returnUserLogin();
-        String userPassword = readFile.returnUserPassword();
-        String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
-        String pathToPostRequest = "/rest/api/2/issue/";
-        Response response = requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
-        return  response.statusCode();
-    }
-
-    /*
-    * Запрос на добавления комментария через API
-     */
-    public int requestToAddComment(){
-        readFile = new ReadFile();
-        String userLogin = readFile.returnUserLogin();
-        String userPassword = readFile.returnUserPassword();
-        String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
-        String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
-        String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";
-        Response response = requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
-        return response.statusCode();
-    }
 
     // Запрос
     public Response requestToPost(String userLogin, String userPassword, String pathToJsonFileForCreateWithAPI,
