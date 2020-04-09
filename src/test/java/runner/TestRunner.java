@@ -1,8 +1,10 @@
 package runner;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
@@ -25,5 +27,7 @@ public class TestRunner {
         System.setProperty("webdriver.chrome.driver", "lib/drivers/chromedriver.exe");
         Configuration.browser = "chrome";
         Configuration.startMaximized = true;
+        Configuration.reportsFolder = "target/test-result/reports";
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false));
     }
 }

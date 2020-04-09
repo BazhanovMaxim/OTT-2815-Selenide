@@ -85,7 +85,8 @@ public class ReportedByMePage{
     public void checkIssueCreated(){
         issueAddedPanel.waitUntil(visible, 10000).isEnabled();
         String key_issue = issueAddedPanel.getText();
-        setKeyIssueUI(key_issue.substring(0, 4));
+        String[] getIssueText = key_issue.split(" ");
+        setKeyIssueUI(getIssueText[0]);
     }
 
     private void setKeyIssueUI(String keyIssueUI){

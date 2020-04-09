@@ -2,6 +2,7 @@ package stepDefs;
 
 import io.cucumber.java.ru.И;
 import cucumber.api.junit.Cucumber;
+import io.qameta.allure.Step;
 import org.junit.runner.RunWith;
 import selenideElements.NavigationPanel;
 
@@ -12,6 +13,7 @@ public class LogOut {
 
     private NavigationPanel navigationPanel;
 
+    @Step("Пользователь выходит из системы")
     @И("пользователь выходит из системы")
     public void userLogsOutOfTheSystem() {
         navigationPanel = new NavigationPanel();

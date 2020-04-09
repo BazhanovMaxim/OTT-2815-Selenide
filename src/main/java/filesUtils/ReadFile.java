@@ -68,7 +68,10 @@ public class ReadFile {
     public String returnIdComment(){
         String pathToReadFile = "target/TestsFiles/responseAddComment.json";
         Map map = keyValue(pathToReadFile);
-        return (String) map.get("id");
+        if (map != null) {
+            return (String) map.get("id");
+        }
+        return null;
     }
 
     // Возвращаем логин пользователья для входа
