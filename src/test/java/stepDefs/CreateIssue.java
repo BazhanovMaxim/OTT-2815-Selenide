@@ -1,5 +1,6 @@
 package stepDefs;
 
+import com.codeborne.selenide.Condition;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith;
 import selenideElements.CreateIssuePage;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
+
+import static com.codeborne.selenide.Condition.exactText;
 
 @RunWith(Cucumber.class)
 public class CreateIssue {
@@ -42,7 +45,7 @@ public class CreateIssue {
     @Тогда("открывается вкладка \"([^\"]*)\"$")
     public void tabOpens(String nameTab) {
         createIssuePage = new CreateIssuePage();
-        Assert.assertEquals(nameTab, createIssuePage.checkTitleOfIssue());
+        createIssuePage.checkTitleOfIssue().waitWhile(Condition.enabled, 10000).shouldHave(exactText(nameTab));
     }
 
     @Step("Пользователь в блоке Project печатает текст")

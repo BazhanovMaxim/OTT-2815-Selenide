@@ -1,7 +1,6 @@
 package selenideElements;
 
 import com.codeborne.selenide.SelenideElement;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DeleteIssueTab {
@@ -18,7 +17,7 @@ public class DeleteIssueTab {
         deleteIssueButton.click();
     }
 
-    public void checkDeletedIssue(){
-        deleteTitle.waitUntil(visible, 10000).shouldBe(visible);
+    public SelenideElement checkDeletedIssue(){
+        return deleteTitle;
     }
 }

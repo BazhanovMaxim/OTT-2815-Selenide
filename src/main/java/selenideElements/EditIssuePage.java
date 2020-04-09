@@ -1,9 +1,7 @@
 package selenideElements;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class EditIssuePage {
@@ -27,10 +25,12 @@ public class EditIssuePage {
     public void clickUpdate(){
         updateButton.click();
     }
-    public void checkEditTitle(){
-        issueTitle.shouldHave(Condition.text("Edit Issue"));
+
+    public SelenideElement checkEditTitle(){
+        return issueTitle;
     }
-    public void checkIssueEditWasSuccess(){
-        issueEditWasSuccess.shouldBe(visible);
+
+    public SelenideElement checkIssueEditWasSuccess(){
+        return issueEditWasSuccess;
     }
 }

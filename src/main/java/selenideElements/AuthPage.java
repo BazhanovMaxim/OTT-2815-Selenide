@@ -20,9 +20,8 @@ public class AuthPage {
         loginButton.click();
     }
 
-    public String returnTitleDashboard(){
-        return titleDashboard.getText();
-        //titleDashboard.waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(title));
+    public SelenideElement returnTitleDashboard(){
+        return titleDashboard;
     }
 
 

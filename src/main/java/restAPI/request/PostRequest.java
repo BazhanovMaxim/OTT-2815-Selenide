@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import filesUtils.CreateFile;
 import filesUtils.ReadFile;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
@@ -57,6 +58,7 @@ public class PostRequest {
             RequestSpecification request = RestAssured.given().auth().preemptive().basic(userLogin, userPassword);
             request.header("Content-Type", "application/json");
             request.body(jb.toString());
+            request.filter(new AllureRestAssured());
             // запрос
             Response response = request.post(pathToPostRequest);
             // создаём файл с ключом созданной записи

@@ -1,5 +1,6 @@
 package stepDefs;
 
+import com.codeborne.selenide.Condition;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
@@ -7,6 +8,8 @@ import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import selenideElements.DeleteCommentPanel;
 import selenideElements.ReportedByMePage;
+
+import static com.codeborne.selenide.Condition.exactText;
 
 public class DeleteComment {
 
@@ -39,7 +42,7 @@ public class DeleteComment {
     @И("открывается окно \"([^\"]*)\"$")
     public void windowOpens(String DeletePanelTitle) {
         deleteCommentPanel = new DeleteCommentPanel();
-        Assert.assertEquals(DeletePanelTitle, deleteCommentPanel.checkIssueTitleDeleteComment());
+        deleteCommentPanel.checkIssueTitleDeleteComment().waitWhile(Condition.enabled, 10000).shouldHave(exactText(DeletePanelTitle));
     }
 
     @Step("Пользователь нажимает на кнопку Delete")
@@ -53,6 +56,6 @@ public class DeleteComment {
     @Тогда("проверяется удаление комментария")
     public void checksWhetherACommentIsDeleted() {
         reportedByMePage = new ReportedByMePage();
-        reportedByMePage.checkIssueDeletePanel();
+        reportedByMePage.checkIssueDeletePanel().waitWhile(Condition.enabled, 10000);
     }
 }

@@ -10,6 +10,8 @@ import io.cucumber.java.ru.Тогда;
 import selenideElements.DeleteIssueTab;
 import selenideElements.ReportedByMePage;
 
+import static com.codeborne.selenide.Condition.visible;
+
 public class DeleteIssue {
 
     private ReportedByMePage reportedByMePage;
@@ -64,6 +66,6 @@ public class DeleteIssue {
     @Тогда("проверяется удаление записи")
     public void checkedToDeletedTheIssue() {
         deleteIssueTab = new DeleteIssueTab();
-        deleteIssueTab.checkDeletedIssue();
+        deleteIssueTab.checkDeletedIssue().waitUntil(visible, 10000).shouldBe(visible);
     }
 }

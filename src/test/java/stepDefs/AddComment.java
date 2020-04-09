@@ -1,13 +1,18 @@
 package stepDefs;
 
+import com.codeborne.selenide.Condition;
+import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.junit.Assert;
 import restAPI.request.PostRequest;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
+
+import static com.codeborne.selenide.Condition.exactText;
 
 public class AddComment {
 
@@ -15,12 +20,21 @@ public class AddComment {
     private ReportedByMePage reportedByMePage;
     private NavigationPanel navigationPanel;
     private String comment;
+    private ReadFile readFile;
 
     @Step("Отправка запроса на добавления комментария")
     @Тогда("отправляется запрос на добавления комментария")
     public void requestIsSentToAddAComment(){
         postRequest = new PostRequest();
-        Assert.assertEquals(201,postRequest.requestToAddComment());
+        readFile = new ReadFile();
+        // Отправка запроса
+        String userLogin = readFile.returnUserLogin();
+        String userPassword = readFile.returnUserPassword();
+        String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
+        String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
+        String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";
+        Response response = postRequest.requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
+        Assert.assertEquals(201, response.getStatusCode());
     }
 
     @Step("Пользователь нажимает на навигационную панель на Issue")
@@ -41,7 +55,7 @@ public class AddComment {
     @Тогда("пользователь на странице \"([^\"]*)\"$")
     public void userOnThePage(String title) {
         reportedByMePage = new ReportedByMePage();
-        Assert.assertEquals(title, reportedByMePage.checkTitle());
+        reportedByMePage.checkTitle().waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(title));
     }
 
     @Step("Выбор записи по ключу")
@@ -77,6 +91,6 @@ public class AddComment {
     @Тогда("проверяется добавленный комментарий")
     public void addedCommentIsChecked() {
         reportedByMePage = new ReportedByMePage();
-        reportedByMePage.checkAddedComment(comment);
+        reportedByMePage.checkAddedComment().shouldBe(exactText(comment));
     }
 }

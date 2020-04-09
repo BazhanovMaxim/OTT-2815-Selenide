@@ -1,5 +1,6 @@
 package stepDefs;
 
+import com.codeborne.selenide.Condition;
 import cucumber.api.junit.Cucumber;
 import io.qameta.allure.Step;
 import org.junit.Assert;
@@ -10,6 +11,8 @@ import io.cucumber.java.ru.Тогда;
 import selenideElements.EditIssuePage;
 import selenideElements.ReportedByMePage;
 import restAPI.request.UpdateRequest;
+
+import static com.codeborne.selenide.Condition.visible;
 
 @RunWith(Cucumber.class)
 public class UpdateIssueInfo {
@@ -44,7 +47,7 @@ public class UpdateIssueInfo {
     @Тогда("открывается окно Edit Issue")
     public void editIssueWindowOpens() {
         editIssuePage = new EditIssuePage();
-        editIssuePage.checkEditTitle();
+        editIssuePage.checkEditTitle().shouldHave(Condition.text("Edit Issue"));
     }
 
     @Step("Пользователь в блоке Summary печатает текст")
@@ -72,6 +75,6 @@ public class UpdateIssueInfo {
     @Тогда("проверяется изменение записи")
     public void editIssueTabCloses() {
         editIssuePage = new EditIssuePage();
-        editIssuePage.checkIssueEditWasSuccess();
+        editIssuePage.checkIssueEditWasSuccess().shouldBe(visible);
     }
 }

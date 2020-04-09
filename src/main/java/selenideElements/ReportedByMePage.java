@@ -2,7 +2,6 @@ package selenideElements;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -38,9 +37,8 @@ public class ReportedByMePage{
     private SelenideElement issueCommentChangeToText = $(".aui-navgroup-primary .aui-nav-selected > a");
 
     // Methods
-    public String checkTitle(){
-        return reportedByMeTitle.getText();
-        //reportedByMe.waitUntil(visible, 10000).shouldBe(exactText(title));
+    public SelenideElement checkTitle(){
+        return reportedByMeTitle;
     }
 
     public void clickEditButton(){
@@ -94,9 +92,8 @@ public class ReportedByMePage{
         createFile.checkFile(keyIssueUI, "IssueKey.txt");
     }
 
-    public void checkAddedComment(String comment){
-        //commentAdd.shouldBe(visible);
-        commentAdd.shouldBe(exactText(comment));
+    public SelenideElement checkAddedComment(){
+        return commentAdd;
     }
 
     public void getIssueUI(String nameFile){
@@ -127,7 +124,7 @@ public class ReportedByMePage{
         issueTrashButtonToDeleteComment.click();
     }
 
-    public void checkIssueDeletePanel(){
-        issueCheckDeletePanel.shouldBe(visible);
+    public SelenideElement checkIssueDeletePanel(){
+        return issueCheckDeletePanel;
     }
 }

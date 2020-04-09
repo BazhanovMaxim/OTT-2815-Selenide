@@ -1,12 +1,12 @@
 package stepDefs;
 
+import com.codeborne.selenide.Condition;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.Тогда;
 import cucumber.api.junit.Cucumber;
 import io.cucumber.java.ru.И;
 import io.qameta.allure.Step;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 import selenideElements.AuthPage;
 
@@ -35,6 +35,6 @@ public class Auth {
     @Тогда("открывается страница \"([^\"]*)\"$")
     public void pageOpens(String titleDashboard) {
         authPage = new AuthPage();
-        Assert.assertEquals(titleDashboard, authPage.returnTitleDashboard());
+        authPage.returnTitleDashboard().waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(titleDashboard));
     }
 }

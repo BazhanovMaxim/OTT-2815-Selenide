@@ -36,8 +36,7 @@ public class CreateIssuePage {
         createButton.click();
     }
 
-    public String checkTitleOfIssue() {
-        return titleOfIssue.getText();
-        //titleOfIssue.waitWhile(enabled, 10000).shouldHave(exactText(nameTab));
+    public SelenideElement checkTitleOfIssue() {
+        return titleOfIssue;
     }
 }
