@@ -1,6 +1,6 @@
 package stepDefs;
 
-import com.codeborne.selenide.Condition;
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
@@ -8,7 +8,6 @@ import io.cucumber.java.ru.Тогда;
 import filesUtils.CreateFile;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import randonNameIssue.RandomName;
 import restAPI.request.PostRequest;
 import cucumber.api.junit.Cucumber;
@@ -17,10 +16,8 @@ import selenideElements.CreateIssuePage;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
 
-import static com.codeborne.selenide.Condition.exactText;
-
 @RunWith(Cucumber.class)
-public class CreateIssue {
+public class CreateIssue extends AllureLogger {
 
     private NavigationPanel navigationPanel;
     private ReportedByMePage reportedByMePage;
@@ -42,7 +39,7 @@ public class CreateIssue {
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/createIssue.json";
         String pathToPostRequest = "/rest/api/2/issue/";
         Response response = postRequest.requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
-        Assert.assertEquals(201, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 201);
     }
 
     @Step("Пользователь нажимает на кнопку Create")
@@ -50,13 +47,15 @@ public class CreateIssue {
     public void userClicksTheCreateButton() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickCreateButton();
+        attachScreenshot();
     }
 
     @Step("Открывается вкладка Create Issue")
     @Тогда("открывается вкладка \"([^\"]*)\"$")
-    public void tabOpens(String nameTab) {
+    public void tabOpens(String titleCreateIssue) {
         createIssuePage = new CreateIssuePage();
-        createIssuePage.checkTitleOfIssue().waitWhile(Condition.enabled, 10000).shouldHave(exactText(nameTab));
+        equals("Проверка открытой страницы по заголовку Create Issue", createIssuePage.checkTitleOfIssue(),titleCreateIssue);
+        attachScreenshot();
     }
 
     @Step("Пользователь в блоке Project печатает текст")
@@ -64,6 +63,7 @@ public class CreateIssue {
     public void userInTheProjectBlockPrints(String project_title) {
         createIssuePage = new CreateIssuePage();
         createIssuePage.enterProjectName(project_title);
+        attachScreenshot();
     }
 
     @Step("Пользователь в блоке Issue Type печатает текст")
@@ -71,6 +71,7 @@ public class CreateIssue {
     public void userBlockIssieTypePrints(String type) {
         createIssuePage = new CreateIssuePage();
         createIssuePage.enterIssueType(type);
+        attachScreenshot();
     }
 
     @Step("Пользователь в блоке Summary печатает название записи")
@@ -81,6 +82,7 @@ public class CreateIssue {
         getRandomNameIssue.generateRandomSummary();
         createIssuePage.enterSummary(getRandomNameIssue.getNameIssue());
         createFile.checkFile(getRandomNameIssue.getNameIssue(), "IssueSummary.txt");
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на ссылку 'Assiqn to me'")
@@ -88,6 +90,7 @@ public class CreateIssue {
     public void userClicksTheLinkAssiqnToMe() {
         createIssuePage = new CreateIssuePage();
         createIssuePage.setAssiqnToMeLink();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку создания записи")
@@ -95,6 +98,7 @@ public class CreateIssue {
     public void userClicksOnTheButtonToCreateTheIssue() {
         createIssuePage = new CreateIssuePage();
         createIssuePage.clickCreateButton();
+        attachScreenshot();
     }
 
     @Step("Проверка созданной записи")
@@ -102,5 +106,6 @@ public class CreateIssue {
     public void createdIssueIsChecked() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.checkIssueCreated();
+        attachScreenshot();
     }
 }

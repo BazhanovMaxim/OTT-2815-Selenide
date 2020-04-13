@@ -1,5 +1,6 @@
 package selenideElements;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.text;
@@ -7,11 +8,13 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import filesUtils.CreateFile;
 import filesUtils.ReadFile;
+import filesUtils.ToJson;
 
 public class ReportedByMePage{
 
     private ReadFile readFile;
     private CreateFile createFile;
+    private ToJson toJson;
 
     // Titles
     private SelenideElement reportedByMeTitle = $(".search-title");
@@ -37,8 +40,8 @@ public class ReportedByMePage{
     private SelenideElement issueCommentChangeToText = $(".aui-navgroup-primary .aui-nav-selected > a");
 
     // Methods
-    public SelenideElement checkTitle(){
-        return reportedByMeTitle;
+    public String checkTitle(){
+        return reportedByMeTitle.waitUntil(Condition.visible, 10000).getText();
     }
 
     public void clickEditButton(){
@@ -97,20 +100,18 @@ public class ReportedByMePage{
     }
 
     public void getIssueUI(String nameFile){
-        String issueInfo = "Issue key: " + issueKey.getText() + "\n "
-                + "Issue summary: " + issueSummary.getText() + "\n "
-                + "Issue reporter: " + issueReporter.getText() + "\n "
-                + "Issue type: " + issueType.getText() + "\n "
-                + "Issue Priority: " + issuePriority.getText() + "\n "
-                + "Issue resolution: " + issueResolution.getText() + "\n "
-                + "Issue created: " + issueWasCreated.getText() + "\n "
-                + "Issue was updated: " + issueWasUpdate.getText() + "\n ";
-        setGetIssueUI(issueInfo, nameFile);
-    }
+        toJson = new ToJson();
+        String jsonStringIssue = "{\"Issue key\":" + issueKey.getText() +
+                ", \"Issue summary\":" + issueSummary.getText() +
+                ", \"Issue reporter\":" + issueReporter.getText() +
+                ", \"Issue type\":" + issueType.getText() +
+                ", \"Issue Priority\":" + issuePriority.getText() +
+                ", \"Issue resolution\":" + issueResolution.getText() +
+                ", \"Issue created\":" + issueWasCreated.getText() +
+                ", \"Issue was updated\"" + issueWasUpdate.getText() + "}";
+        toJson.serialize(issueKey.getText(), issueSummary.getText(), issueReporter.getText(), issueType.getText(),
+                issuePriority.getText(), issueResolution.getText(), issueWasCreated.getText(), issueWasCreated.getText(), nameFile);
 
-    private void setGetIssueUI(String issueInfo, String nameFile){
-        createFile = new CreateFile();
-        createFile.checkFile(issueInfo, nameFile);
     }
 
     public void clickIssueAllCommentButton(){
@@ -124,7 +125,7 @@ public class ReportedByMePage{
         issueTrashButtonToDeleteComment.click();
     }
 
-    public SelenideElement checkIssueDeletePanel(){
-        return issueCheckDeletePanel;
+    public String checkIssueDeletePanel(){
+        return issueCheckDeletePanel.getText();
     }
 }

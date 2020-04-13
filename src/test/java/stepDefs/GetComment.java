@@ -1,14 +1,14 @@
 package stepDefs;
 
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import restAPI.response.GetRequest;
 
-public class GetComment {
+public class GetComment extends AllureLogger {
 
     private GetRequest getCommentAPI;
     private ReadFile readFile;
@@ -23,7 +23,7 @@ public class GetComment {
         String pathToPostRequest = "/rest/api/2/issue/{issueIdOrKey}/comment/";
         String issueKey = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         Response response = getCommentAPI.getRequest(issueKey, userLogin, userPassword, pathToPostRequest);
-        Assert.assertEquals(200, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 200);
     }
 
     @Step("Пользователь записывает информацию о комментариях в файл 'InfoAboutIssueCommentsUI.txt'")

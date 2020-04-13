@@ -1,19 +1,16 @@
 package stepDefs;
 
-import com.codeborne.selenide.Condition;
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import restAPI.request.DeleteRequest;
 import selenideElements.DeleteCommentPanel;
 import selenideElements.ReportedByMePage;
 
-import static com.codeborne.selenide.Condition.exactText;
-
-public class DeleteComment {
+public class DeleteComment extends AllureLogger {
 
     private ReportedByMePage reportedByMePage;
     private DeleteCommentPanel deleteCommentPanel;
@@ -31,7 +28,7 @@ public class DeleteComment {
         String pathToDeleteRequest = "rest/api/2/issue/{IssueKey}/comment/" + idComment;
         String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         Response response = deleteRequest.deleteRequest(pathIssueKeyAPI, userLogin, userPassword, pathToDeleteRequest);
-        Assert.assertEquals(204, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 204);
     }
 
     @Step("Пользователь нажимает на кнопку Comments")
@@ -39,6 +36,7 @@ public class DeleteComment {
     public void userClicksTheCommentsButton() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickIssueAllCommentButton();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку удаления комментария")
@@ -46,13 +44,15 @@ public class DeleteComment {
     public void userClicksTheDeleteCommentButton() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickIssueTrashButtonToDeleteComment();
+        attachScreenshot();
     }
 
     @Step("Открывается окно Delete Comment / Проверка заголовка")
     @И("открывается окно \"([^\"]*)\"$")
     public void windowOpens(String DeletePanelTitle) {
         deleteCommentPanel = new DeleteCommentPanel();
-        deleteCommentPanel.checkIssueTitleDeleteComment().waitWhile(Condition.enabled, 10000).shouldHave(exactText(DeletePanelTitle));
+        equals("Проверка открытого окна Delete Comment по заголовку", deleteCommentPanel.checkIssueTitleDeleteComment(), DeletePanelTitle);
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Delete")
@@ -60,12 +60,14 @@ public class DeleteComment {
     public void userClicksTheButton(String buttonToDelete) {
         deleteCommentPanel = new DeleteCommentPanel();
         deleteCommentPanel.clickIssueDeleteButton(buttonToDelete);
+        attachScreenshot();
     }
 
     @Step("Проверяется удалённый комментарий")
     @Тогда("проверяется удаление комментария")
     public void checksWhetherACommentIsDeleted() {
         reportedByMePage = new ReportedByMePage();
-        reportedByMePage.checkIssueDeletePanel().waitWhile(Condition.enabled, 10000);
+        String expectedValue = "MAX-2 has been updated.";
+        equals("Проверка удалённого комментария", reportedByMePage.checkIssueDeletePanel(), expectedValue);
     }
 }

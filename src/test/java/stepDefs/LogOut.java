@@ -1,5 +1,6 @@
 package stepDefs;
 
+import allure.AllureLogger;
 import io.cucumber.java.ru.И;
 import cucumber.api.junit.Cucumber;
 import io.qameta.allure.Step;
@@ -9,7 +10,7 @@ import selenideElements.NavigationPanel;
 import static com.codeborne.selenide.Selenide.close;
 
 @RunWith(Cucumber.class)
-public class LogOut {
+public class LogOut extends AllureLogger {
 
     private NavigationPanel navigationPanel;
 
@@ -19,6 +20,7 @@ public class LogOut {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickProfileLink();
         navigationPanel.clickLogOutButton();
+        attachScreenshot();
         close();
     }
 }

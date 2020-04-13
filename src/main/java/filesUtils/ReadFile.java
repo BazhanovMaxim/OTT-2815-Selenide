@@ -1,7 +1,6 @@
 package filesUtils;
 
 import com.google.gson.Gson;
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;
 import java.util.Map;

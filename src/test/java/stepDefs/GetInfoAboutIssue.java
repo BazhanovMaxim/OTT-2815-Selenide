@@ -1,5 +1,6 @@
 package stepDefs;
 
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Тогда;
@@ -12,7 +13,7 @@ import restAPI.response.GetRequest;
 import selenideElements.ReportedByMePage;
 
 @RunWith(Cucumber.class)
-public class GetInfoAboutIssue {
+public class GetInfoAboutIssue extends AllureLogger {
 
     private GetRequest getIssueAPI;
     private ReportedByMePage reportedByMePage;
@@ -36,5 +37,6 @@ public class GetInfoAboutIssue {
     public void userWritesWithInformationAboutTheEntryIn(String nameFile){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.getIssueUI(nameFile);
+        getBytesAnnotationWithArgs(nameFile);
     }
 }

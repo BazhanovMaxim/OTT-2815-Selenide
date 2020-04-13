@@ -1,20 +1,19 @@
 package stepDefs;
 
-import com.codeborne.selenide.Condition;
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import restAPI.request.PostRequest;
 import selenideElements.NavigationPanel;
 import selenideElements.ReportedByMePage;
 
 import static com.codeborne.selenide.Condition.exactText;
 
-public class AddComment {
+public class AddComment extends AllureLogger {
 
     private PostRequest postRequest;
     private ReportedByMePage reportedByMePage;
@@ -34,7 +33,7 @@ public class AddComment {
         String pathToJsonFileForCreateWithAPI = "src/main/resources/response/addComment.json";
         String pathToPostRequest = "/rest/api/2/issue/" + issueKey + "/comment";
         Response response = postRequest.requestToPost(userLogin, userPassword, pathToJsonFileForCreateWithAPI, pathToPostRequest);
-        Assert.assertEquals(201, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 201);
     }
 
     @Step("Пользователь нажимает на навигационную панель на Issue")
@@ -42,6 +41,7 @@ public class AddComment {
     public void userClicksOnTheNavigationBarOnIssue() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickIssueNavigation();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на Reported By Me")
@@ -49,13 +49,15 @@ public class AddComment {
     public void userClicksOnTheReportedByMe() {
         navigationPanel = new NavigationPanel();
         navigationPanel.clickReporterLink();
+        attachScreenshot();
     }
 
     @Step("Пользователь на странице Reported By Me / Проверка заголовка")
     @Тогда("пользователь на странице \"([^\"]*)\"$")
-    public void userOnThePage(String title) {
+    public void userOnThePage(String titleReportedByMe) {
         reportedByMePage = new ReportedByMePage();
-        reportedByMePage.checkTitle().waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(title));
+        equals("Проверяем, что на странице Reported By Me", reportedByMePage.checkTitle(), titleReportedByMe);
+        attachScreenshot();
     }
 
     @Step("Выбор записи по ключу")
@@ -63,6 +65,7 @@ public class AddComment {
     public void userSelectsAnEntryByKey() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToIssueById();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Comment")
@@ -70,6 +73,7 @@ public class AddComment {
     public void userClicksTheCommentButton(){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickButtonComment();
+        attachScreenshot();
     }
 
     @Step("Пользователь печатает комментарий")
@@ -78,6 +82,7 @@ public class AddComment {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.setIssueCommentField(comment);
         this.comment = comment;
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Add")
@@ -85,6 +90,7 @@ public class AddComment {
     public void userClicksTheAddButton() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.addCommentButton();
+        attachScreenshot();
     }
 
     @Step("Проверяется добавленный комментарий")
@@ -92,5 +98,7 @@ public class AddComment {
     public void addedCommentIsChecked() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.checkAddedComment().shouldBe(exactText(comment));
+        attachScreenshot();
     }
+
 }

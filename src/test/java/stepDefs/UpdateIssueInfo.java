@@ -1,11 +1,10 @@
 package stepDefs;
 
-import com.codeborne.selenide.Condition;
+import allure.AllureLogger;
 import cucumber.api.junit.Cucumber;
 import filesUtils.ReadFile;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.junit.runner.RunWith;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
@@ -17,7 +16,7 @@ import restAPI.request.UpdateRequest;
 import static com.codeborne.selenide.Condition.visible;
 
 @RunWith(Cucumber.class)
-public class UpdateIssueInfo {
+public class UpdateIssueInfo extends AllureLogger {
 
     private EditIssuePage editIssuePage;
     private ReportedByMePage reportedByMePage;
@@ -34,7 +33,7 @@ public class UpdateIssueInfo {
         String pathToPutRequest = "/rest/api/2/issue/{key_issue}";
         String pathIssueKeyAPI = readFile.readFile("src/main/resources/response/keyIssueAPI.txt");
         Response response = updateIssueInfo.requestToUpdate(pathIssueKeyAPI, userLogin, userPassword, pathToPutRequest);
-        Assert.assertEquals(204, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 204);
     }
 
     @Step("Пользователь выбирает свою запись через ключ")
@@ -42,6 +41,7 @@ public class UpdateIssueInfo {
     public void userSelectsTheirEntryUsingAKey() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToIssueById();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Edit")
@@ -49,14 +49,17 @@ public class UpdateIssueInfo {
     public void userInputInEditButton() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickEditButton();
-
+        attachScreenshot();
     }
 
     @Step("открывается окно Edit Issue")
     @Тогда("открывается окно Edit Issue")
     public void editIssueWindowOpens() {
         editIssuePage = new EditIssuePage();
-        editIssuePage.checkEditTitle().shouldHave(Condition.text("Edit Issue"));
+        readFile = new ReadFile();
+        String expectedValue = "Edit Issue : MAX-2";
+        equals("Проверка открытого окна по заголовку", editIssuePage.checkEditTitle(), expectedValue);
+        attachScreenshot();
     }
 
     @Step("Пользователь в блоке Summary печатает текст")
@@ -64,6 +67,7 @@ public class UpdateIssueInfo {
     public void userInTheSummaryBlockPrints(String summaryText) {
         editIssuePage = new EditIssuePage();
         editIssuePage.setSummaryField(summaryText);
+        attachScreenshot();
     }
 
     @Step("Пользователь в блоке Priority печатает текст")
@@ -71,6 +75,7 @@ public class UpdateIssueInfo {
     public void userInThePriorityBlockPrints(String priorityText) {
         editIssuePage = new EditIssuePage();
         editIssuePage.setIssuePrioritySpan(priorityText);
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Update")
@@ -78,6 +83,7 @@ public class UpdateIssueInfo {
     public void userClicksTheUpdateButton() {
         editIssuePage = new EditIssuePage();
         editIssuePage.clickUpdate();
+        attachScreenshot();
     }
 
     @Step("Проверяется изменение записи")
@@ -85,5 +91,6 @@ public class UpdateIssueInfo {
     public void editIssueTabCloses() {
         editIssuePage = new EditIssuePage();
         editIssuePage.checkIssueEditWasSuccess().shouldBe(visible);
+        attachScreenshot();
     }
 }

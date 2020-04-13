@@ -26,8 +26,8 @@ public class EditIssuePage {
         updateButton.click();
     }
 
-    public SelenideElement checkEditTitle(){
-        return issueTitle;
+    public String checkEditTitle(){
+        return issueTitle.getText();
     }
 
     public SelenideElement checkIssueEditWasSuccess(){

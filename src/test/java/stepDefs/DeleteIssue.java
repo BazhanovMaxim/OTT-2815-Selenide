@@ -1,5 +1,6 @@
 package stepDefs;
 
+import allure.AllureLogger;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.Когда;
 import io.qameta.allure.Step;
@@ -13,7 +14,7 @@ import selenideElements.ReportedByMePage;
 
 import static com.codeborne.selenide.Condition.visible;
 
-public class DeleteIssue {
+public class DeleteIssue extends AllureLogger {
 
     private ReportedByMePage reportedByMePage;
     private DeleteIssueTab deleteIssueTab;
@@ -30,7 +31,7 @@ public class DeleteIssue {
         String pathToDeleteRequest = "/rest/api/2/issue/{issueIdOrKey}";
         String pathIssueKeyAPI = readFile.readFile("target\\TestsFiles\\IssueKeyAPI.txt");
         Response response = deleteIssueAPI.deleteRequest(pathIssueKeyAPI, userLogin, userPassword, pathToDeleteRequest);
-        Assert.assertEquals(204, response.getStatusCode());
+        equals("Проверка статуса кода", response.getStatusCode(), 204);
     }
 
     @Step("Пользователь выбирает созданную ранее запись")
@@ -38,6 +39,7 @@ public class DeleteIssue {
     public void userSelectsAPreviouslyCreatedIssue() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToCreatedIssueById();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку More")
@@ -45,6 +47,7 @@ public class DeleteIssue {
     public void userClicksTheButtonMore(){
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToButtonMore();
+        attachScreenshot();
     }
 
     @Step("Пользователь нажимает на кнопку Delete")
@@ -52,6 +55,7 @@ public class DeleteIssue {
     public void userClicksTheButtonDelete() {
         reportedByMePage = new ReportedByMePage();
         reportedByMePage.clickToDeleteButton();
+        attachScreenshot();
     }
 
     @Step("Появляется окно Delete Issue")
@@ -60,6 +64,7 @@ public class DeleteIssue {
         deleteIssueTab = new DeleteIssueTab();
         readFile = new ReadFile();
         Assert.assertEquals(deletePanelTitle + ": " + readFile.readFile("target/TestsFiles/IssueKey.txt"), deleteIssueTab.checkTitle());
+        attachScreenshot();
     }
 
     @Step("Пользователь удаляет запись")
@@ -67,12 +72,14 @@ public class DeleteIssue {
     public void userDeleteTheIssue(){
         deleteIssueTab = new DeleteIssueTab();
         deleteIssueTab.clickDeleteButton();
+        attachScreenshot();
     }
 
     @Step("Проверяется удаление записи")
     @Тогда("проверяется удаление записи")
     public void checkedToDeletedTheIssue() {
         deleteIssueTab = new DeleteIssueTab();
-        deleteIssueTab.checkDeletedIssue().waitUntil(visible, 10000).shouldBe(visible);
+        deleteIssueTab.checkDeletedIssue().waitUntil(visible, 10000).isEnabled();
+        attachScreenshot();
     }
 }

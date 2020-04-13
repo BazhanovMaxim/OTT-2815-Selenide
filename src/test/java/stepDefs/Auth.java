@@ -1,5 +1,6 @@
 package stepDefs;
 
+import allure.AllureLogger;
 import com.codeborne.selenide.Condition;
 import filesUtils.ReadFile;
 import io.cucumber.java.ru.Дано;
@@ -10,9 +11,8 @@ import io.qameta.allure.Step;
 import org.junit.runner.RunWith;
 import selenideElements.AuthPage;
 
-
 @RunWith(Cucumber.class)
-public class Auth {
+public class Auth extends AllureLogger {
 
     private AuthPage authPage;
     private ReadFile readFile;
@@ -22,6 +22,7 @@ public class Auth {
     public void openSiteJira() {
         authPage = new AuthPage();
         authPage.openSite();
+        attachScreenshot();
     }
 
     @Step("Авторизация пользователя")
@@ -29,12 +30,14 @@ public class Auth {
     public void userEnterToSystem() {
         readFile = new ReadFile();
         authPage.inputUserData(readFile.returnUserLogin(), readFile.returnUserPassword());
+        attachScreenshot();
     }
 
     @Step("Пользователь на странице System Dashboard / Проверка заголовка")
     @Тогда("открывается страница \"([^\"]*)\"$")
     public void pageOpens(String titleDashboard) {
         authPage = new AuthPage();
-        authPage.returnTitleDashboard().waitUntil(Condition.visible, 10000).shouldBe(Condition.exactText(titleDashboard));
+        equals("Проверка заголовка Title Dashboard", authPage.returnTitleDashboard(), titleDashboard);
+        attachScreenshot();
     }
 }

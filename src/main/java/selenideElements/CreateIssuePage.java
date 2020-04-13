@@ -1,5 +1,6 @@
 package selenideElements;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -36,7 +37,7 @@ public class CreateIssuePage {
         createButton.click();
     }
 
-    public SelenideElement checkTitleOfIssue() {
-        return titleOfIssue;
+    public String checkTitleOfIssue() {
+        return titleOfIssue.waitWhile(Condition.enabled, 10000).getText();
     }
 }
