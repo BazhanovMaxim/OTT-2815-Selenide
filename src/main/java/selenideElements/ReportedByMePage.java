@@ -4,8 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
+
 import filesUtils.CreateFile;
 import filesUtils.ReadFile;
 import filesUtils.ToJson;
@@ -101,14 +101,7 @@ public class ReportedByMePage{
 
     public void getIssueUI(String nameFile){
         toJson = new ToJson();
-        String jsonStringIssue = "{\"Issue key\":" + issueKey.getText() +
-                ", \"Issue summary\":" + issueSummary.getText() +
-                ", \"Issue reporter\":" + issueReporter.getText() +
-                ", \"Issue type\":" + issueType.getText() +
-                ", \"Issue Priority\":" + issuePriority.getText() +
-                ", \"Issue resolution\":" + issueResolution.getText() +
-                ", \"Issue created\":" + issueWasCreated.getText() +
-                ", \"Issue was updated\"" + issueWasUpdate.getText() + "}";
+
         toJson.serialize(issueKey.getText(), issueSummary.getText(), issueReporter.getText(), issueType.getText(),
                 issuePriority.getText(), issueResolution.getText(), issueWasCreated.getText(), issueWasCreated.getText(), nameFile);
 
@@ -121,6 +114,9 @@ public class ReportedByMePage{
     public void clickIssueTrashButtonToDeleteComment(){
         // Сначала наводимся на элемент мышью для появления
         issueTrashButtonToDeleteComment.hover();
+        //executeJavaScript(
+        //        ".aui-iconfont-delete.hidden = false;"
+        //);
         // Кликаем на элемент
         issueTrashButtonToDeleteComment.click();
     }
