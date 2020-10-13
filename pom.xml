@@ -13,7 +13,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <encoding>${project.build.sourceEncoding}</encoding>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
-        <junit.version>4.13</junit.version>
+        <junit.version>4.13.1</junit.version>
         <cucumber-java.version>5.4.1</cucumber-java.version>
         <cucumber-junit.version>5.4.1</cucumber-junit.version>
         <selenide.version>5.6.1</selenide.version>
